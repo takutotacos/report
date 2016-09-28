@@ -1,0 +1,13 @@
+
+<p id="notice"><%= notice %></p>
+<%= form_tag({ controller: :login, action: :check }, id: :fm) do %>
+  <div class="field">
+    <%= label_tag :user_id, 'ユーザID：  ' %>
+    <%= text_field_tag :user_id, '', size: 5 %><br />
+  </div>
+  <div class="field">
+    <%= label_tag :password, 'パスワード:  ' %>
+    <%= password_field_tag :password, '', size: 10 %><br />
+  </div>
+  <%= submit_tag 'ログイン' %>
+ <% end %>

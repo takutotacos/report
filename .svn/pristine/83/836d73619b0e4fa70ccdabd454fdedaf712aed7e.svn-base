@@ -1,0 +1,11 @@
+class User < ActiveRecord::Base
+
+  has_and_belongs_to_many :groups
+  has_many :reports
+
+  validates :user_name, presence: true, length: { in: 2..10 }
+  validates :password, confirmation: true, length: { in: 1..10 }, if: :password
+  validates :password_confirmation, presence: true, if: :password
+
+#  attr_accessor :user_name, :user_id
+end

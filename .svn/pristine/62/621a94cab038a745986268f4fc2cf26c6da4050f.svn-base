@@ -1,0 +1,15 @@
+class LoginController < ApplicationController
+
+  def check
+    # ユーザ入力に合致するユーザが存在する場合は、日報表示画面に遷移。
+    @user = User.where('user_id = :user_id AND password = :password',
+      user_id: params[:user_id], password: params[:password])
+    if @user.present?
+      session[:user_id] = params[:user_id]
+      redirect_to '/reports/show'
+      # セッションにログインユーザ情報を登録する。
+    else
+      redirect_to '/login' , notice: '登録情報に合致するユーザは存在しません。'
+    end
+  end
+end

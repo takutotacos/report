@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ReportManagementSystem</title>
+        <meta charset="utf-8">
+        <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+        <%= stylesheet_link_tag 'reports_show', media: 'all', 'data-turbolinks-track' => true %>
+        <%= csrf_meta_tags %>
+    </head>
+    <body>
+        <div>
+            <%= yield %>
+        </div>
+    </body>
+</html>

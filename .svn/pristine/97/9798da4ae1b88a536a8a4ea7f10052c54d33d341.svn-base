@@ -1,0 +1,16 @@
+<%= link_to'日報を書く','http://localhost:3000/reports/form' %>
+<%= link_to'新規アカウント登録','http://localhost:3000/user' %>
+<%= form_for(@form, class:'form-horizontal', role:'form', url: {action: 'search'}, :method => :post) do |f| %>
+<p>
+    <%= f.label :user_name, 'ユーザ名:' %>
+    <%= f.text_field :user_name %>
+</p>
+<p>
+    <%= f.submit '検索'%>
+</p>
+<% end %>
+<!--  <% if @report == true %> -->
+<% @report.each do |r| %>
+<%= r.text_field :user_id, readonly: true %>
+<% end %>
+<% end %>

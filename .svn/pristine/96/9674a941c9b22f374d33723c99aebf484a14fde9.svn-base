@@ -1,0 +1,86 @@
+<%= link_to'日報を書く','http://localhost:3000/reports/form' %>
+<%= link_to'新規アカウント登録','http://localhost:3000/user' %>
+<%= form_for @form, url: '/reports/search', method: :post do |f| %>
+<p>
+    <%= f.label :user_name, 'ユーザ名:' %>
+    <%= f.text_field :user_name %>
+</p>
+<p>
+    <%= f.submit '検索する'%>
+</p>
+<% end %>
+<div class="positonForSolid">
+    <% @report.each do |r| %>
+    <div class="positonForSolid">
+        <div class="solidLine">
+            <div class="positionForReport">
+                <label for="create_date">日付:&nbsp;</label><%=  r.formatted_date %>&nbsp;&nbsp;&nbsp;
+                <label for="group_name">所属:&nbsp;</label><%=  @group.group_name %>&nbsp;&nbsp;&nbsp;
+                <label for="user_id">ユーザID:&nbsp;</label><%=  @user.user_id %>&nbsp;&nbsp;&nbsp;
+                <label for="user_name">名前:&nbsp;</label><%=  @user.user_name %>
+
+                <table class="tableForReports">
+                    <caption class="captionStyle">1.本日の予定作業</caption>
+                    <thead>
+                        <tr>
+                            <th class="col-xs-1">No</th>
+                            <th class="col-xs-4">プロジェクト名</th>
+                            <th class="col-xs-4">タスク名</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><% r.yesterday_plan.each do |p| %>
+                            <td>&nbsp;<%=  p.task_no %></td>
+                            <td >&nbsp;<%= p.planned_task_project %></td>
+                            <td>&nbsp;<%=  p.planned_task %></td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+                <table class="tableForReports">
+                    <caption class="captionStyle">2.本日の実施作業</caption>
+                    <thead>
+                        <tr>
+                            <tr>
+                                <th class="col-xs-1">&nbsp;No</th>
+                                <th class="col-xs-3">&nbsp;プロジェクト名</th>
+                                <th class="col-xs-3">&nbsp;タスク名</th>
+                                <th class="col-xs-1">&nbsp;工数(h)</th>
+                            </tr>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <% r.actuals.each do |a| %>
+                            <td>&nbsp;<%=  a.task_no %></td>
+                            <td >&nbsp;<%= a.actual_task_project %></td>
+                            <td>&nbsp;<%=  a.actual_task %></td>
+                            <td>&nbsp;<%=  a.actual_task_time_spent %></td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+                <table class="tableForReports">
+                    <caption class="captionStyle">3.次回の予定作業</caption>
+                    <thead>
+                        <tr>
+                            <th class="col-xs-1">No</th>
+                            <th class="col-xs-4">プロジェクト名</th>
+                            <th class="col-xs-4">タスク名</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><% r.planneds.each do |l| %>
+                            <td>&nbsp;<%=  l.task_no %></td>
+                            <td >&nbsp;<%= l.planned_task_project %></td>
+                            <td>&nbsp;<%=  l.planned_task %></td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <% end %>
+</div>
+</div>

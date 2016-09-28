@@ -1,0 +1,11 @@
+ja:
+  activerecord:
+   errors:
+     models:
+       user: ユーザ
+  attributes:
+    user:
+      userid: ユーザID
+      username: ユーザ
+      password: パスワード
+      confirmedpassword: 確認用パスワード

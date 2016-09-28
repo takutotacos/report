@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ReportManagementSystem</title>
+  <meta charset="utf-8">
+  <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'regist', media: 'all', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+    <header class="navbar navbar-default" role="navbar-brand">
+        <div class="container-header-original"><div class="padding-left">
+              <p><%= link_to 'ログアウト', root_path, class: 'navbar-brand' %></p></div>
+           </div>
+           </header>
+         </div>
+      </head>
+      <body>
+    <div class="container">
+        <%= yield %>
+  </div>
+ </body>
+</html>

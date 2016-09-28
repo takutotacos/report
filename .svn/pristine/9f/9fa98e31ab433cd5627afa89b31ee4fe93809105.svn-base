@@ -1,0 +1,54 @@
+class ReportShowController < ApplicationController
+    def show
+        # 　検索用のフォームを生成する
+        @form = ReportShow.new
+
+        # 検索条件に入力されたユーザ名の日報を表示する
+        # １．セッションからログインユーザを取得
+        @user ||= User.find_by(user_id: session[:user_id])
+        # ２．ユーザの所属するグループを取得
+        @group = Group.joins(:users).where('users.user_id = ?', @user.user_id).first
+        # ３．取得したユーザIDを元に、レポート・次回予定・実績を取得
+        @report = Report.where('group_id = ?', @group.group_id).order(:created_at).reverse_order
+        # ４．日付のフォーマットおよび、本日の予定を取得
+        @report.each do |y|
+            require 'date'
+            y.formatted_date = Date.parse(y.create_date, '%Y/%m/%d')
+            y.formatted_date = y.formatted_date.to_s
+
+            last_report = Report.where('user_id = ?', y.user_id).where('create_date < ?', y.create_date).order(create_date: :desc).first
+            y.yesterday_plan = if last_report.nil?
+                                   {}
+                               else
+                                   last_report.planneds
+                               end
+        end
+    end
+
+    def find
+        # 　検索用のフォームを生成する
+        @form = ReportShow.new
+
+        #  検索条件に入力されたユーザ名の日報を表示する
+        # １．入力されたユーザ名を元に、ユーザIDを取得
+        user_name = params[:report_show][:user_name]
+        @user = User.where('user_name = ?', user_name).first
+        # ２．所属グループ名を取得
+        @group = Group.joins(:users).where('users.user_id = ?', @user.user_id).first
+        # ３．取得したユーザIDを元に、レポートを取得
+        @report = Report.where('user_id = ?', @user.user_id).order(:created_at).reverse_order
+        # ４．「本日の予定」取得および、日付のフォーマットを行う
+        # 　
+        @report.each do |y|
+            require 'date'
+            y.formatted_date = Date.parse(y.create_date, '%Y/%m/%d')
+            y.formatted_date = y.formatted_date.to_s
+            last_report = Report.where('user_id = ?', y.user_id).where('create_date < ?', y.create_date).order(create_date: :desc).first
+            y.yesterday_plan = if last_report.nil?
+                                   {}
+                               else
+                                   last_report.planneds
+                               end
+        end
+    end
+end
