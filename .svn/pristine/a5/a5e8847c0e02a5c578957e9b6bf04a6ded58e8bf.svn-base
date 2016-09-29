@@ -2,16 +2,15 @@ class ReportsController < ApplicationController
 
   def form
     @today = Date.today.strftime("%Y/%m/%d")
-    user_id = session[:user_id]
+    @user_id = session[:user_id]
 
     # ログインユーザが日報を既に登録しているか確認
-    if Report.where('user_id = ? AND create_date = ?', user_id, @today).exists?
+    if Report.where('user_id = ? AND create_date = ?', @user_id, @today).exists?
       redirect_to '/reports/show', notice: '既に日報を提出しています。'
     else
-      @groups = Group.joins(:users).where('users.user_id = ?', user_id)
-      @user = User.where('user_id = ?', user_id).first
-      
-      if Report.where('user_id = ?', user_id).exists?
+      @groups = Group.joins(:users).where('users.user_id = ?', @user_id)
+
+      if Report.where('user_id = ?', @user_id).exists?
         @report = Report.where('user_id = ?', user_id).order(create_date: :desc).first
         @planneds = Planned.where('report_id = ?', @report[:id])
         @is_first_time = false
@@ -36,7 +35,7 @@ class ReportsController < ApplicationController
       num += 1
     end
     @report = Report.create(report_columns)
-    redirect_to '/reports/show'
+    redirect_to '/reports/form'
   end
 
 

@@ -1,7 +1,7 @@
 <%= render 'shared/links' %>
 <div class="position">
   <%= form_for(@report, url: { action: :add }, htm: {method: :post }) do |f| %>
-    <%= f.hidden_field :user_id, value: @user.id  %>
+    <%= f.hidden_field :user_id, value: @user_id  %>
     <div class="field">
         <%= f.label :create_date, '作成日： ' %>
         <%= f.text_field :create_date, value: @today, readonly: true %><br/>

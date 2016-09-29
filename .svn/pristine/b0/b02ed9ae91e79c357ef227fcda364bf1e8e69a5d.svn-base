@@ -21,11 +21,11 @@
                     日付:&nbsp;
                       <%=  r.formatted_date %>&nbsp;&nbsp;&nbsp;
                     宛先:&nbsp;
-                      <%= r.group.group_name %>&nbsp;&nbsp;&nbsp;
+                      <%= r.groups.group_name %>&nbsp;&nbsp;&nbsp;
                     ユーザID:&nbsp;
-                      <%=  r.user.user_id %>&nbsp;&nbsp;&nbsp;
+                      <%=  r.users.user_id %>&nbsp;&nbsp;&nbsp;
                     名前:&nbsp;
-                      <%=  r.user.user_name %>
+                      <%=  r.users.user_name %>
                 </div>
                 <table class="tableForReports">
                     <caption class="captionStyle">1.本日の予定作業</caption>
