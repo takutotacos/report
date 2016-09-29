@@ -4,6 +4,7 @@ class Report < ActiveRecord::Base
   has_many :actuals
   has_many :planneds
 
+  # Adding comment 
   accepts_nested_attributes_for :planneds
   accepts_nested_attributes_for :actuals
 
