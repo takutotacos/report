@@ -2,11 +2,10 @@ class ReportShowController < ApplicationController
     def show
         # ログインユーザが所属するグループあての日報をすべて表示する。
         # １．セッションからログインユーザを取得
-        user_id = session[:user_id]
-        user = User.find_by(user_id: user_id)
+        user = User.find(session[:user_id])
         # ２．ユーザの所属するグループとグループIDを取得
-        group_ids = Group.joins(:users).where('users.user_id = ?', user_id).select('groups.group_id')
-        @groups = Group.joins(:users).where('users.user_id = ?',  user_id)
+        group_ids = Group.joins(:users).where('users.user_id = ?', user.user_id).select('groups.group_id')
+        @groups = Group.joins(:users).where('users.user_id = ?',  user.user_id)
         # ３．取得したグループIDを元に、レポート・次回予定・実績を取得
         @report = Report.where(group_id: group_ids).order(:created_at).reverse_order
         # ４．日付のフォーマット、本日の予定を取得
@@ -25,8 +24,10 @@ class ReportShowController < ApplicationController
     end
 
     def find
+      # １．セッションからログインユーザを取得
+      user = User.find(session[:user_id])
       # ログインユーザの所属グループ情報を取得
-      @groups = Group.joins(:users).where('users.user_id = ?', session[:user_id])
+      @groups = Group.joins(:users).where('users.user_id = ?', user.user_id)
 
         #  検索条件に入力されたユーザ名の日報を表示する
         # 入力されたユーザ名を元に、ユーザ情報を取得。選択されたグループIDを取得。
@@ -48,7 +49,8 @@ class ReportShowController < ApplicationController
 
         # ユーザが何も入力をしなかった、もしくはユーザからの入力に合致する検索結果がなかった場合
         if (group_id.empty? && user_name.blank?) || @report.empty?
-          redirect_to '/reports/show', notice: '条件に合致する日報が存在しません。'
+          flash.now[:notice] = '条件に合致する日報が存在しません。'
+          render 'find'
         else
         # 「本日の予定」取得および、日付のフォーマットを行う
           @report.each do |y|

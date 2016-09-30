@@ -1,0 +1,4 @@
+takuto:
+  name: Takuto Test
+  user_id: admin001
+  password_digest: <%= User.digest('password') %>
