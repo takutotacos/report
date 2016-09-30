@@ -12,9 +12,14 @@ class UsersController < ApplicationController
         @user.groups<<groups
 
         if @user.save
-            redirect_to '/login', notice: '登録しました。先ほど入力したユーザIDとパスワードでログインできます。'
+          login @user
+          puts session[:user_id]
+          redirect_to '/login', notice: '登録しました。先ほど入力したユーザIDとパスワードでログインできます。'
         else
-            redirect_to '/user', notice: '登録できませんでした。'
+          flash.now[:notice] = '登録に失敗しました。'
+          @groups = Group.all
+          render 'new'
+            # redirect_to '/user', notice: '登録できませんでした。'
         end
    end
 

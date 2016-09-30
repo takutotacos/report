@@ -13,6 +13,7 @@
 </p>
 <% end %>
 <div class="positonForSolid">
+  <% if !@report.nil? %>
     <% @report.each do |r| %>
     <div class="positonForSolid">
         <div class="solidLine">
@@ -95,5 +96,6 @@
         </div>
     </div>
     <% end %>
+  <% end %>
 </div>
 </div>
