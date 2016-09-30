@@ -12,5 +12,7 @@ class LoginController < ApplicationController
   end
 
   def logout
-    
+
+  end
+
 end

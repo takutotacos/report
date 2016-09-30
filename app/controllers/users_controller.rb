@@ -12,9 +12,10 @@ class UsersController < ApplicationController
         @user.groups<<groups
 
         if @user.save
-          login @user
-          puts session[:user_id]
-          redirect_to '/login', notice: '登録しました。先ほど入力したユーザIDとパスワードでログインできます。'
+          log_in @user
+          remember user
+          flash[:success] = "Welcome to the report management system!"
+          redirect_to @user
         else
           flash.now[:notice] = '登録に失敗しました。'
           @groups = Group.all

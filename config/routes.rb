@@ -1,19 +1,11 @@
 Rails.application.routes.draw do
-  #get 'user/user'
-  # ログイン画面へのアクセス。
-  root 'init#init'
-  get '/login' => 'login#login'
-  post '/login/check' => 'login#check'
+  root 'sessions#new'
+  get 'login' => 'sessions#new'
+  post 'login' => 'sessions#create'
+  delete 'logout' => 'sessions#destroy'
 
-  get '/user' => 'users#new'
-  post '/user' => 'users#create'
-
-  get '/reports/form' => 'reports#form'
-  post '/reports/add' => 'reports#add'
-  patch '/reports/add' => 'reports#add'
-
-  get '/reports/show' => 'report_show#show'
-  post '/reports/search' => 'report_show#find'
+  resources :users
+  resources :reports
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
